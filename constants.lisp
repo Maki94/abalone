@@ -1,0 +1,11 @@
+(defconstant desno 1)
+(defconstant gore-desno 2)
+(defconstant gore-levo 3)
+(defconstant levo 4)
+(defconstant dole-levo 5)
+(defconstant dole-desno 6)
+
+(setq rows '(A B C D E F G H I))
+(setq columns '(1 2 3 4 5 6 7 8 9))
+(setq white '((A (5 6)) (B (4 5 6))(C (4 5)) (D nil) (E nil) (F nil) (G (5 6)) (H (4 5 6))(I (4 5))))
+(setq black '((A (8 9)) (B (7 8 9))(C (7 8)) (D nil) (E nil) (F nil) (G (2 3)) (H (1 2 3))(I (1 2))))
