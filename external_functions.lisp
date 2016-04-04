@@ -6,7 +6,7 @@
 (defun print-field (field)
   ; (print-list field)
   (cond
-    ((equal (car field) 'U) (princ "  "))
+    ((equal (car field) 'U) (princ "   "))
     ((equal (car field) 'W) (princ " w "))
     ((equal (car field) 'B) (princ " b "))
     ((equal (car field) 'E) (princ " - "))
