@@ -44,3 +44,10 @@ potega)) ...)
 
 ***
 ## Homework 2
+2. Implementacija operatora promene stanja
+ROK: 16.4.2015. GODINE
+## Homework 2
+3. Implementacija Min-Max algoritma za traženje sa alfa-beta odsecanjem
+ROK: 30.4.2015. GODINE
+## Homework 2
+4. Izrada heuristike (procena stanja)
