@@ -13,5 +13,4 @@
 (defstruct state
 	white
 	black
-	empty
-)
+	empty)
