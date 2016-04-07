@@ -1,0 +1,3 @@
+- treba porverititi da li radi __NOTE__ [main.lisp](main.lisp)
+- Ponov implementirati kada se sredi GUI __TODO__ [main.lisp](main.lisp)
+- ako su tri tacke __TODO__ [main.lisp](main.lisp)
