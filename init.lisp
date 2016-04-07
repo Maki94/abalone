@@ -1,5 +1,3 @@
-(require "algorithms.lisp")
-
 (defun init-rows ()
 	(list '(I H G F E D C B A)))
 
@@ -9,11 +7,11 @@
 
 
 (defun init-white ()
-	(list '((I (5 6)) (H (4 5 6)) (G (4 5)) (F nil) (E nil) (D nil) (C (5 6)) (B (4 5 6)) (A (4 5)))))
+	 '((I (5 6)) (H (4 5 6)) (G (4 5)) (F nil) (E nil) (D nil) (C (5 6)) (B (4 5 6)) (A (4 5))))
 
 
 (defun init-black ()
-	(list black '((I (8 9)) (H (7 8 9)) (G (7 8)) (F nil) (E nil) (D nil) (C (2 3)) (B (1 2 3)) (A (1 2)))))
+	'((I (8 9)) (H (7 8 9)) (G (7 8)) (F nil) (E nil) (D nil) (C (2 3)) (B (1 2 3)) (A (1 2))))
 
 
 (defun init-empty ()
