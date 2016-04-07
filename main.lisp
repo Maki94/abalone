@@ -55,6 +55,28 @@
 		((cadr tacke) t); TODO ako su 2 tacke
 		(t (move-state-one-right stanje (car tacke) oznaka))))
 
+(defun move-state-two-right (stanje tacka1 tacka2 oznaka); TODO izmeniti svuda da je oznaka True za WHITE, a nil za BLACK
+	(if (equal (car tacka1) (car tacka2))
+		(let*((new-tacka (cons  (car tacka) (list (1+ (cadr tacka))))) ; TODO nakon izmene svuda, optimalozovati algoritam
+					(pushed-tacka (cons (car tacka) (list (1+ (cadr new-tacka)))))
+					(white (state-white stanje))
+					(black (state-black stanje))
+					(empty (state-empty stanje))
+					(removed-black (remove-point black new-tacka))
+					(removed-white (remove-point white new-tacka))
+
+					(if (equal oznaka 'w)
+						(move-state-one-right (move-state-one-right
+									(if (equal removed-black black)
+												stanje
+												(move-state-one-right stanje new-tacka 'b)) tacka2 'w) tacka1 'w)
+						(move-state-one-right (move-state-one-right
+									(if (equal removed-white white)
+												stanje
+												(move-state-one-right stanje new-tacka 'w)) tacka2 'b) tacka1 'b)
+
+	(move-state-one-right (move-state-one-right stanje tacka1 oznaka) tacka2 oznaka)
+)
 (defun move-state-one-right (stanje tacka oznaka) "CHECKED"
 	(let*((new-tacka (cons  (car tacka) (list (1+ (cadr tacka)))))
 				(white (state-white stanje))
