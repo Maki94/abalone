@@ -31,3 +31,12 @@
 		:white white
 		:black black
 		:empty empty))
+(defun remove-point (state-paremeter tacka) "CHECKED"
+		(apply 'list (mapcar (lambda (x)	(if (equal (car x) (car tacka))
+																				(list (car x) (remove (cadr tacka) (cadr x))) x))
+																				 state-paremeter)))
+
+(defun add-point (state-paremeter tacka)		"CHECKED"
+		(apply 'list (mapcar (lambda (x)	(if (equal (car x) (car tacka))
+																				(list (car x) (append (cdr tacka) (cadr x))) x))
+																				 state-paremeter)))

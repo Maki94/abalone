@@ -103,16 +103,6 @@
 						 	(add-point (remove-point empty new-tacka) tacka))
 				 )))
 
-(defun remove-point (state-paremeter tacka) "CHECKED"
-		(apply 'list (mapcar (lambda (x)	(if (equal (car x) (car tacka))
-																				(list (car x) (remove (cadr tacka) (cadr x))) x))
-																				 state-paremeter)))
-
-(defun add-point (state-paremeter tacka)		"CHECKED"
-		(apply 'list (mapcar (lambda (x)	(if (equal (car x) (car tacka))
-																				(list (car x) (append (cdr tacka) (cadr x))) x))
-																				 state-paremeter)))
-
 (defun kraj (stanje) "CHECKED"
 	(or (not (reduce #'my-or (mapcar (lambda (x) (cadr x)) (state-white stanje))))
 			(not (reduce #'my-or (mapcar (lambda (x) (cadr x)) (state-black stanje))))))
