@@ -1,9 +1,12 @@
+(require "external_functions.lisp")
+(require "algorithms.lisp")
+(require "constants.lisp")
 (require "init.lisp")
 
-(defun abalone ()
+(defun abalone () ; beli uvek igra prvi, ako igrac ima True igra prvi, a ako auto ima True onda racunar igra prvi
 	(let* ((stanje (init-state))
 		(prvi (progn
-			(format t "~%Unesite ko igraprvi (w ili b): ")
+			(format t "~%Unesite ko igra prvi (w ili b): ")
 			(read)))
 		(racunar (progn
 			(format t "~%Unesite r ako racunar igra prvi (r ili c): ")
@@ -13,50 +16,82 @@
 	(igraj stanje igrac auto)))
 
 (defun igraj (stanje igrac auto)																								; igrac je True ako igra white, auto je True ako igra komijuter
-	(let* ((nstanje (if (not auto)																								; nstanje sadri strukturu nakon odigranog poteza
-									; (car (minimax stanje 4 igrac t))
+	(let* ((nstanje (if t																								; nstanje sadri strukturu nakon odigranog poteza
 										(unesi stanje igrac)))) 																		; unesi vraca strukturu tipa state, koja vraca novo stanje
 					(progn (stampaj nstanje)																							; odstampaj tabelu nakon odigranog poteza
 						(if (not (kraj nstanje))																						; ako nije kraj igre
-							(let* ((nnstanje (if auto																					; i ne igra kompijuter, onda igra neko drugi umesto njega
-																(unesi nstanje (not igrac))											; odigraj ponovo potez
-																;(car (minimax nstanje 4 (not igrac) t)))))
+							(let* ((nnstanje (if t																					; i ne igra kompijuter, onda igra neko drugi umesto njega
+																(unesi nstanje (not igrac)))))											; odigraj ponovo potez
 								(progn (stampaj nnstanje)																				; na kraju stapaj ovo stanje
 									(if (not (kraj nnstanje))																			; da li je kraj?
 									(igraj nnstanje igrac auto))))))))														; rekurzivno dok neko ne izgubi
 
-(defun unesi (stanje igrac)
+;(igraj pocetno t nil) ; najpre igram prvi kaol beli igrac, a nakon toga igram kao crni kompijuter
+
+
+(defun unesi (stanje igrac) "CHECKED"
 	(progn	(format t "~%Unesite potez (potez oblika (((D 4) (E 5) nil) 5)): ")
 					(let* (	(potez (read))
-									(smer (cdr potez))
+									(smer (cadr potez))
 									(tacke (car potez))
 									(oznaka (if igrac 'w 'b))
 									(izlaz (postavi stanje oznaka tacke smer)))
-									(if (equal stanje izlaz) (unesi stanje igrac) izlaz)))
-
-(defun postavi (stanje oznaka tacke smer); (tacke = ((D 4) (E 3) nil)) 					; moja modifikovana funkcija, treba da vrati strukturu stanje sa izmenama
-	(if (valid stanje)
-		(if (equal oznaka 'w)
-			(update-state-white stanje tacke smer)
-			(update-state-black stanje tacke smer))
-		(error "Potez nije validan")))
+									(if (equal stanje izlaz) (unesi stanje igrac) izlaz))))
 
 
-(defun update-state-white (stanje tacke smer) ; vraca izmenjeno stanje
+(defun postavi (stanje oznaka tacke smer); "CHECKED" (tacke = ((D 4) (E 3) nil)) 					; moja modifikovana funkcija, treba da vrati strukturu stanje sa izmenama
+	(cond
+		((= desno smer)			(update-state-desno stanje tacke oznaka))								; TODO smer HANDLER
+		((= gore-desno smer)(update-state-gore-desno stanje tacke oznaka))
+		((= gore-levo smer)	(update-state-gore-levo stanje tacke oznaka))
+		((= levo smer)			(update-state-levo stanje tacke oznaka))
+		((= dole-levo smer)	(update-state-dole-levo stanje tacke oznaka))
+		((= dole-desno smer)(update-state-dole-desno stanje tacke oznaka))
+		(t (error "~%Unet smer nije validan!!!"))))
 
-)
+(defun update-state-desno (stanje tacke oznaka) "CHECKED"
+	(cond
+		((caddr tacke) nil); TODO ako su tri tacke
+		((cadr tacke) t); TODO ako su 2 tacke
+		(t (move-state-one-right stanje (car tacke) oznaka))))
 
-(defun kraj (stanje)
-	(and 	(apply 'or (mapcar (lambda (x) (if (cdr x) t )) stanje-white))
-				(apply 'or (mapcar (lambda (x) (if (cdr x) t )) stanje-black))))
+(defun move-state-one-right (stanje tacka oznaka) "CHECKED"
+	(let*((new-tacka (cons  (car tacka) (list (1+ (cadr tacka)))))
+				(white (state-white stanje))
+				(black (state-black stanje))
+				(empty (state-empty stanje)))
+				(if (equal oznaka 'w)
+					(get-state
+						 (add-point (remove-point white tacka) new-tacka)
+						 black
+						 (add-point (remove-point empty new-tacka) tacka))
+					(get-state
+							white
+							(add-point (remove-point black tacka) new-tacka)
+						 	(add-point (remove-point empty new-tacka) tacka))
+				 )))
 
-(defun stampaj (stanje)
+(defun remove-point (state-paremeter tacka) "CHECKED"
+		(apply 'list (mapcar (lambda (x)	(if (equal (car x) (car tacka))
+																				(list (car x) (remove (cadr tacka) (cadr x))) x))
+																				 state-paremeter)))
+(defun add-point (state-paremeter tacka)		"CHECKED"
+		(apply 'list (mapcar (lambda (x)	(if (equal (car x) (car tacka))
+																				(list (car x) (append (cdr tacka) (cadr x))) x))
+																				 state-paremeter)))
+
+
+(defun kraj (stanje) "CHECKED"
+	(or (not (reduce #'my-or (mapcar (lambda (x) (cadr x)) (state-white stanje))))
+			(not (reduce #'my-or (mapcar (lambda (x) (cadr x)) (state-black stanje))))))
+
+(defun stampaj (stanje) "CHECKED" ; TODO treba napraviti lepstu funkciju za stmapanje
 	(format t "~%White:~%")
-	(print-list stanje-white)
+	(print-list (state-white stanje))
 	(format t "~%Black:~%")
-	(print-list stanje-black)
+	(print-list (state-black stanje))
 	(format t "~%Empty:~%")
-	(print-list stanje-empty))
+	(print-list (state-empty stanje)))
 
 
 
