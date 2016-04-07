@@ -9,7 +9,8 @@
 (defun set-difference2 (s1 s2) (cond ((null s1) nil) ((member (car s1) s2) (set-difference2 (cdr s1) s2)) (t (cons (car s1) (set-difference2 (cdr s1) s2)))))
 (defun difference-union (l1 l2 l3) (set-difference2 l1 (set-union2 l2 l3)))
 (defun my-or (x y) (or x y))
-
+(defun equal3 (p1 p2 p3)
+	(and (equal p1 p2) (equal p2 p3)))
 (defun occupied (black white) 	; "pravi listu zauzetih elemenata"
 	(if (and white black)
 		(cons (list (caar white) (set-union2 (cadar black) (cadar white)))
