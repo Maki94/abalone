@@ -41,7 +41,7 @@
 
 (defun postavi (stanje oznaka tacke smer); "CHECKED" (tacke = ((D 4) (E 3) nil)) 					; moja modifikovana funkcija, treba da vrati strukturu stanje sa izmenama
 	(cond
-		((= desno smer)			(update-state-desno stanje tacke oznaka))								; TODO smer HANDLER
+		((= desno smer)			(update-state-desno stanje tacke oznaka))								; "CHECKED"
 		((= gore-desno smer)(update-state-gore-desno stanje tacke oznaka))
 		((= gore-levo smer)	(update-state-gore-levo stanje tacke oznaka))
 		((= levo smer)			(update-state-levo stanje tacke oznaka))
@@ -85,7 +85,7 @@
 	(or (not (reduce #'my-or (mapcar (lambda (x) (cadr x)) (state-white stanje))))
 			(not (reduce #'my-or (mapcar (lambda (x) (cadr x)) (state-black stanje))))))
 
-(defun stampaj (stanje) "CHECKED" ; TODO treba napraviti lepstu funkciju za stmapanje
+(defun stampaj (stanje) "CHECKED" ; TODO Ponov implementirati kada se sredi GUI
 	(format t "~%White:~%")
 	(print-list (state-white stanje))
 	(format t "~%Black:~%")
