@@ -8,6 +8,7 @@
 (defun set-union2 (l1 l2) (cond ((null l2) l1) ((member (car l2) l1) (set-union2 l1 (cdr l2))) (t (cons (car l2) (set-union2 l1 (cdr l2))))))
 (defun set-difference2 (s1 s2) (cond ((null s1) nil) ((member (car s1) s2) (set-difference2 (cdr s1) s2)) (t (cons (car s1) (set-difference2 (cdr s1) s2)))))
 (defun difference-union (l1 l2 l3) (set-difference2 l1 (set-union2 l2 l3)))
+
 (defun my-or (x y) (or x y))
 (defun equal3 (p1 p2 p3)
 	(and (equal p1 p2) (equal p2 p3)))
@@ -40,3 +41,19 @@
 		(apply 'list (mapcar (lambda (x)	(if (equal (car x) (car tacka))
 																				(list (car x) (append (cdr tacka) (cadr x))) x))
 																				 state-paremeter)))
+
+(defun stampaj (stanje) "CHECKED" ; TODO Ponovo implementirati kada se sredi GUI
+	(format t "~%White:~%")
+	(print-list (state-white stanje))
+	(format t "~%Black:~%")
+	(print-list (state-black stanje))
+	(format t "~%Empty:~%")
+	(print-list (state-empty stanje)))
+
+(defun kraj (stanje) "CHECKED"
+	(or (not (reduce #'my-or (mapcar (lambda (x) (cadr x)) (state-white stanje))))
+			(not (reduce #'my-or (mapcar (lambda (x) (cadr x)) (state-black stanje))))))
+
+
+(defun prev-char (ch) (car (member ch (init-rows))))
+(defun next-char (ch) (car (member ch (reverse (init-rows)))))

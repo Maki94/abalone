@@ -25,7 +25,6 @@
 ;		;    (( equal (car black-row) col)   (cons (list col 'B) (get-fields white-row (cdr black-row) empty-row (1+ col))))
 ;		;    (( equal (car empty-row) col)  (cons (list col 'E) (get-fields white-row black-row (cdr empty-row) (1+ col))))
 ;		;    (t                 (cons (list col 'U) (get-fields white-row black-row empty-row (1+ col))))))
-;
 ;		;(defun print-table (table)
 ;		;  (mapcar (lambda (x) (print-row (cadr x))) table))
 ;
