@@ -32,6 +32,7 @@
 		:white white
 		:black black
 		:empty empty))
+		
 (defun remove-point (state-paremeter tacka) "CHECKED"
 		(apply 'list (mapcar (lambda (x)	(if (equal (car x) (car tacka))
 																				(list (car x) (remove (cadr tacka) (cadr x))) x))

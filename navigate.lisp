@@ -44,8 +44,7 @@
 					(get-state
 							white
 							(add-point (remove-point black tacka) new-tacka)
-						 	(add-point (remove-point empty new-tacka) tacka))
-				 )))
+						 	(add-point (remove-point empty new-tacka) tacka)))))
 
 ;;;+++++++++++++++++++ NAVIGATE LEFT +++++++++++++++++++
 
@@ -95,8 +94,7 @@
 					(get-state
 							white
 							(add-point (remove-point black tacka) new-tacka)
-						 	(add-point (remove-point empty new-tacka) tacka))
-				 )))
+						 	(add-point (remove-point empty new-tacka) tacka)))))
 ;;;+++++++++++++++++++ NAVIGATE UP-RIGHT +++++++++++++++++++
 
 (defun move-state-three-up-right (stanje tacka1 tacka2 tacka3 oznaka)

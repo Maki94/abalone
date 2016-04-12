@@ -7,7 +7,7 @@
 
 
 (defun init-white ()
-	 '((I (5 6)) (H (4 5 6)) (G (4 5)) (F nil) (E nil) (D nil) (C (5 6)) (B (4 5 6)) (A (4 5))))
+	 '((I (5 6)) (H (4 5 6)) (G (4 5)) (F nil) (E (3 4)) (D (4)) (C (5 6)) (B (4 5 6)) (A (4 5))))
 
 
 (defun init-black ()
