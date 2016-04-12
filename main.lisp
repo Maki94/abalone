@@ -54,31 +54,31 @@
 		((cadr tacke) (move-state-two-right stanje (car tacke) (cadr tacke) oznaka))
 		(t (move-state-one-right stanje (car tacke) oznaka))))
 
-(defun update-state-gore-desno (stanje tacke oznaka)
+(defun update-state-gore-desno (stanje tacke oznaka) "CHECKED"
 	(cond
 		((caddr tacke) (move-state-three-up-right stanje (car tacke) (cadr tacke) (caddr tacke) oznaka))
 		((cadr tacke) (move-state-two-up-right stanje (car tacke) (cadr tacke) oznaka))
 		(t (move-state-one-up-right stanje (car tacke) oznaka))))
 
-(defun update-state-gore-levo (stanje tacke oznaka)
+(defun update-state-gore-levo (stanje tacke oznaka) "CHECKED"
 	(cond
 		((caddr tacke) (move-state-three-up-left stanje (car tacke) (cadr tacke) (caddr tacke) oznaka))
 		((cadr tacke) (move-state-two-up-left stanje (car tacke) (cadr tacke) oznaka))
 		(t (move-state-one-up-left stanje (car tacke) oznaka))))
 
-(defun update-state-levo (stanje tacke oznaka)
+(defun update-state-levo (stanje tacke oznaka) "CHECKED"
 	(cond
 		((caddr tacke) (move-state-three-left stanje (car tacke) (cadr tacke) (caddr tacke) oznaka))
 		((cadr tacke) (move-state-two-left stanje (car tacke) (cadr tacke) oznaka))
 		(t (move-state-one-left stanje (car tacke) oznaka))))
 
-(defun update-state-dole-levo (stanje tacke oznaka)
+(defun update-state-dole-levo (stanje tacke oznaka) "CHECKED"
 	(cond
 		((caddr tacke) (move-state-three-down-left stanje (car tacke) (cadr tacke) (caddr tacke) oznaka))
 		((cadr tacke) (move-state-two-down-left stanje (car tacke) (cadr tacke) oznaka))
 		(t (move-state-one-down-left stanje (car tacke) oznaka))))
 
-(defun update-state-dole-desno (stanje tacke oznaka)
+(defun update-state-dole-desno (stanje tacke oznaka) "CHECKED"
 	(cond
 		((caddr tacke) (move-state-three-down-right stanje (car tacke) (cadr tacke) (caddr tacke) oznaka))
 		((cadr tacke) (move-state-two-down-right stanje (car tacke) (cadr tacke) oznaka))
@@ -94,7 +94,11 @@
 	;(trace move-state-two-right)
 	;(trace move-state-one-right)
 	;(stampaj (unesi poc t))
-	(print-list (unesi poc t))
+	;(trace update-state-dole-desno)
+		(trace move-state-two-down-left)
+				(print-list (unesi poc t))
+		(untrace move-state-two-down-left)
+	;(untrace update-state-dole-desno)
 		;(untrace move-state-one-right)
 	;(untrace move-state-two-right)
 	;(untrace update-state-desno)

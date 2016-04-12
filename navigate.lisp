@@ -112,7 +112,7 @@
 							stanje
 							(move-state-one-up-right (move-state-one-up-right stanje new-tacka2 (not oznaka))
 								new-tacka1 (not oznaka)))
-					tacka3 oznaka) tacka2 oznaka) tacka1 oznaka))
+					tacka3 oznaka) tacka2 oznaka) tacka1 oznaka)))
 
 (defun move-state-two-up-right (stanje tacka1 tacka2 oznaka)
 	(let*((new-tacka (cons  (next-char (car tacka2)) (list (1+ (cadr tacka2)))))
@@ -125,7 +125,7 @@
 					(if (and (equal removed-black black) (equal removed-white white))
 							stanje
 							(move-state-one-up-right stanje new-tacka (not oznaka)))
-					tacka2 oznaka) tacka1 oznaka))
+					tacka2 oznaka) tacka1 oznaka)))
 
 (defun move-state-one-up-right (stanje tacka oznaka)
 	(let*((new-tacka (cons  (next-char (car tacka)) (list (1+ (cadr tacka)))))
@@ -145,8 +145,8 @@
 ;;;+++++++++++++++++++ NAVIGATE UP-left +++++++++++++++++++
 
 (defun move-state-three-up-left (stanje tacka1 tacka2 tacka3 oznaka)
-	(let*((new-tacka1 (cons  (next-char (car tacka3)) (list (1- (cadr tacka3)))))
-				(new-tacka2 (cons  (next-char (car new-tacka1)) (list (1- (cadr new-tacka1)))))
+	(let*((new-tacka1 (cons  (next-char (car tacka3)) (list (cadr tacka3))))
+				(new-tacka2 (cons  (next-char (car new-tacka1)) (list (cadr new-tacka1))))
 				(white (state-white stanje))
 				(black (state-black stanje))
 				(removed-black (remove-point (remove-point black new-tacka1) new-tacka2))
@@ -157,10 +157,10 @@
 							stanje
 							(move-state-one-up-left (move-state-one-up-left stanje new-tacka2 (not oznaka))
 								new-tacka1 (not oznaka)))
-					tacka3 oznaka) tacka2 oznaka) tacka1 oznaka))
+					tacka3 oznaka) tacka2 oznaka) tacka1 oznaka)))
 
 (defun move-state-two-up-left (stanje tacka1 tacka2 oznaka)
-	(let*((new-tacka (cons  (next-char (car tacka2)) (list (1- (cadr tacka2)))))
+	(let*((new-tacka (cons  (next-char (car tacka2)) (list (cadr tacka2))))
 				(white (state-white stanje))
 				(black (state-black stanje))
 				(removed-black (remove-point black new-tacka))
@@ -170,10 +170,10 @@
 					(if (and (equal removed-black black) (equal removed-white white))
 							stanje
 							(move-state-one-up-left stanje new-tacka (not oznaka)))
-					tacka2 oznaka) tacka1 oznaka))
+					tacka2 oznaka) tacka1 oznaka)))
 
 (defun move-state-one-up-left (stanje tacka oznaka)
-	(let*((new-tacka (cons  (next-char (car tacka)) (list (1- (cadr tacka)))))
+	(let*((new-tacka (cons  (next-char (car tacka)) (list (cadr tacka))))
 				(white (state-white stanje))
 				(black (state-black stanje))
 				(empty (state-empty stanje)))
@@ -190,8 +190,8 @@
 ;;;;+++++++++++++++++++ NAVIGATE DOWN-RIGHT +++++++++++++++++++
 
 (defun move-state-three-down-right (stanje tacka1 tacka2 tacka3 oznaka)
-	(let*((new-tacka1 (cons  (prev-char (car tacka3)) (list (1+ (cadr tacka3)))))
-				(new-tacka2 (cons  (prev-char (car new-tacka1)) (list (1+ (cadr new-tacka1)))))
+	(let*((new-tacka1 (cons  (prev-char (car tacka3)) (list (cadr tacka3))))
+				(new-tacka2 (cons  (prev-char (car new-tacka1)) (list (cadr new-tacka1))))
 				(white (state-white stanje))
 				(black (state-black stanje))
 				(removed-black (remove-point (remove-point black new-tacka1) new-tacka2))
@@ -202,10 +202,10 @@
 							stanje
 							(move-state-one-down-right (move-state-one-down-right stanje new-tacka2 (not oznaka))
 								new-tacka1 (not oznaka)))
-					tacka3 oznaka) tacka2 oznaka) tacka1 oznaka))
+					tacka3 oznaka) tacka2 oznaka) tacka1 oznaka)))
 
 (defun move-state-two-down-right (stanje tacka1 tacka2 oznaka)
-	(let*((new-tacka (cons  (prev-char (car tacka2)) (list (1+ (cadr tacka2)))))
+	(let*((new-tacka (cons  (prev-char (car tacka2)) (list (cadr tacka2))))
 				(white (state-white stanje))
 				(black (state-black stanje))
 				(removed-black (remove-point black new-tacka))
@@ -215,10 +215,10 @@
 					(if (and (equal removed-black black) (equal removed-white white))
 							stanje
 							(move-state-one-down-right stanje new-tacka (not oznaka)))
-					tacka2 oznaka) tacka1 oznaka))
+					tacka2 oznaka) tacka1 oznaka)))
 
 (defun move-state-one-down-right (stanje tacka oznaka)
-	(let*((new-tacka (cons  (prev-char (car tacka)) (list (1+ (cadr tacka)))))
+	(let*((new-tacka (cons  (prev-char (car tacka)) (list (cadr tacka))))
 				(white (state-white stanje))
 				(black (state-black stanje))
 				(empty (state-empty stanje)))
@@ -247,7 +247,7 @@
 							stanje
 							(move-state-one-down-left (move-state-one-down-left stanje new-tacka2 (not oznaka))
 								new-tacka1 (not oznaka)))
-					tacka3 oznaka) tacka2 oznaka) tacka1 oznaka))
+					tacka3 oznaka) tacka2 oznaka) tacka1 oznaka)))
 
 (defun move-state-two-down-left (stanje tacka1 tacka2 oznaka)
 	(let*((new-tacka (cons  (prev-char (car tacka2)) (list (1- (cadr tacka2)))))
@@ -260,10 +260,10 @@
 					(if (and (equal removed-black black) (equal removed-white white))
 							stanje
 							(move-state-one-down-left stanje new-tacka (not oznaka)))
-					tacka2 oznaka) tacka1 oznaka))
+					tacka2 oznaka) tacka1 oznaka)))
 
 (defun move-state-one-down-left (stanje tacka oznaka)
-	(let*((new-tacka (cons  (prev-char (car tacka)) (list (1+ (cadr tacka)))))
+	(let*((new-tacka (cons  (prev-char (car tacka)) (list (1- (cadr tacka)))))
 				(white (state-white stanje))
 				(black (state-black stanje))
 				(empty (state-empty stanje)))

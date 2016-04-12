@@ -54,6 +54,5 @@
 	(or (not (reduce #'my-or (mapcar (lambda (x) (cadr x)) (state-white stanje))))
 			(not (reduce #'my-or (mapcar (lambda (x) (cadr x)) (state-black stanje))))))
 
-
-(defun prev-char (ch) (car (member ch (init-rows))))
-(defun next-char (ch) (car (member ch (reverse (init-rows)))))
+(defun prev-char (ch) (cadr (member ch (car (init-rows)))))
+(defun next-char (ch) (cadr (member ch  (reverse (car (init-rows))))))
