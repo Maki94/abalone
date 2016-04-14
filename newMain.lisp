@@ -3,6 +3,7 @@
 (require "init.lisp")
 (require "newNavigation.lisp")
 
+
 (defun abalone ()
 	(let* ((stanje (init-state))
 		(prvi (progn
@@ -36,15 +37,13 @@
 									(izlaz (postavi stanje igrac tacke smer)))
 									(if (equal stanje izlaz) (unesi stanje igrac) izlaz))))
 
-(defun postavi (stanje oznaka tacke smer)
+(defun postavi (stanje oznaka tacke smer) ; TODO: make wrapper for sorting moves
   (cond ((caddr tacke) (move-state-three stanje (car tacke) (cadr tacke) (caddr tacke) oznaka smer))
         ((cadr tacke) (move-state-two stanje (car tacke) (cadr tacke) oznaka smer))
         (t (move-state-one stanje (car tacke) oznaka smer))))
 
-(setf poc (init-state))
-(print-list poc)
-(format t "~%~%~%")
-
-;(trace move-state-two-down-left)
-	(print-list (unesi poc t))
-;(untrace move-state-two-down-left)
+(defun actions (stanje player) ; TODO: returns all valid moves
+)
+(defun results (stanje akcija))
+(defun terminal-test (stanje))
+(defun utility (stanje player))

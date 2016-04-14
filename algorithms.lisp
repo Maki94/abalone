@@ -32,7 +32,7 @@
 		:white white
 		:black black
 		:empty empty))
-		
+
 (defun remove-point (state-paremeter tacka) "CHECKED"
 		(apply 'list (mapcar (lambda (x)	(if (equal (car x) (car tacka))
 																				(list (car x) (remove (cadr tacka) (cadr x))) x))
@@ -57,3 +57,12 @@
 
 (defun prev-char (ch) (cadr (member ch (car (init-rows)))))
 (defun next-char (ch) (cadr (member ch  (reverse (car (init-rows))))))
+(defun get-all-new-tacka (tacka)
+  (list (get-new-tacka desno tacka)
+        (get-new-tacka gore-desno tacka)
+        (get-new-tacka gore-levo tacka)
+        (get-new-tacka levo tacka)
+        (get-new-tacka dole-levo tacka)
+        (get-new-tacka dole-desno tacka)
+    )
+)
