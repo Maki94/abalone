@@ -47,3 +47,10 @@
 (defun results (stanje akcija))
 (defun terminal-test (stanje))
 (defun utility (stanje player))
+
+
+
+(setf poc (init-state))
+(print-list poc)
+(format t "~%~%~%")
+(print-list (unesi poc t))

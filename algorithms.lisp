@@ -63,6 +63,7 @@
         (get-new-tacka gore-levo tacka)
         (get-new-tacka levo tacka)
         (get-new-tacka dole-levo tacka)
-        (get-new-tacka dole-desno tacka)
-    )
-)
+        (get-new-tacka dole-desno tacka)))
+
+(defun find-ball (target list) ; target = ((d 1)) list = (()(D 1 2)())
+	(member (cadr target) (member (car target) list)))
