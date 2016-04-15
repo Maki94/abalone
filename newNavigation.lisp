@@ -20,12 +20,10 @@
           (get-state
               white
               (add-point (remove-point black tacka) new-tacka)
-              (add-point (remove-point empty new-tacka) tacka))
-         )))
+              (add-point (remove-point empty new-tacka) tacka)))))
 
 (defun move-state-two (stanje tacka1 tacka2 oznaka smer)
   (if (and (equal tacka1 tacka2) (or (equal smer desno) (equal smer levo)))
-    ;(move-state-one tacka2 oznaka smer)
     (move-state-one (move-state-one stanje tacka1 oznaka smer) tacka2 oznaka smer)
     (let*((new-tacka (get-new-tacka smer tacka2))
           (white (state-white stanje))

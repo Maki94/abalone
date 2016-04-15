@@ -37,7 +37,7 @@
 									(izlaz (postavi stanje igrac tacke smer)))
 									(if (equal stanje izlaz) (unesi stanje igrac) izlaz))))
 
-(defun postavi (stanje oznaka tacke smer) ; TODO: make wrapper for sorting moves
+(defun postavi (stanje oznaka tacke smer) ; NOTE: make wrapper for sorting moves
   (cond ((caddr tacke) (move-state-three stanje (car tacke) (cadr tacke) (caddr tacke) oznaka smer))
         ((cadr tacke) (move-state-two stanje (car tacke) (cadr tacke) oznaka smer))
         (t (move-state-one stanje (car tacke) oznaka smer))))
