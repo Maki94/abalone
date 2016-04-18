@@ -1,8 +1,8 @@
-(require "external_functions.lisp")
 (require "algorithms.lisp")
 (require "constants.lisp")
 (require "init.lisp")
-(require "navigate.lisp")
+(require "navigation.lisp")
+(require "validate.lisp")
 
 (defun abalone ()
 	(let* ((stanje (init-state))
@@ -29,7 +29,6 @@
 
 ;e.e (igraj pocetno t nil) ; najpre igram prvi kaol beli igrac, a nakon toga igram kao crni kompijuter
 
-
 (defun unesi (stanje igrac) "CHECKED"
 	(progn	(format t "~%Unesite potez (potez oblika (((D 4) (E 5) nil) 5)): ")
 					(let* (	(potez (read))
@@ -38,68 +37,33 @@
 									(izlaz (postavi stanje igrac tacke smer)))
 									(if (equal stanje izlaz) (unesi stanje igrac) izlaz))))
 
-(defun postavi (stanje oznaka tacke smer); "CHECKED" (tacke = ((D 4) (E 3) nil))
-	(cond
-		((= desno smer)			(update-state-desno stanje tacke oznaka))								; "CHECKED"
-		((= gore-desno smer)(update-state-gore-desno stanje tacke oznaka))					;
-		((= gore-levo smer)	(update-state-gore-levo stanje tacke oznaka))						;
-		((= levo smer)			(update-state-levo stanje tacke oznaka))								;
-		((= dole-levo smer)	(update-state-dole-levo stanje tacke oznaka))						;
-		((= dole-desno smer)(update-state-dole-desno stanje tacke oznaka))					;
-		(t (error "~%Uneti smer nije validan!!!"))))
+(defun postavi (stanje oznaka tacke smer) ; NOTE: make wrapper for sorting moves
+  (cond ((caddr tacke) (move-state-three stanje (car tacke) (cadr tacke) (caddr tacke) oznaka smer))
+        ((cadr tacke) (move-state-two stanje (car tacke) (cadr tacke) oznaka smer))
+        (t (move-state-one stanje (car tacke) oznaka smer))))
 
-(defun update-state-desno (stanje tacke oznaka) "CHECKED"
-	(cond
-		((caddr tacke) (move-state-three-right stanje (car tacke) (cadr tacke) (caddr tacke) oznaka))
-		((cadr tacke) (move-state-two-right stanje (car tacke) (cadr tacke) oznaka))
-		(t (move-state-one-right stanje (car tacke) oznaka))))
+(defun actions (stanje player)
+  (let* ( (single-balls (single-balls (player-state stanje player)))
+          (balls (player-state stanje player))
+          (neighbours2 (make-set-from-list (sort-lista-tacke (all-neighbours2 single-balls balls))))
+          (neighbours3 (make-set-from-list (sort-lista-tacke (all-neighbours3 neighbours2 balls))))
+          (command3 (make-command neighbours3))
+          (command2 (make-command neighbours2))
+          (command1 (make-command (mapcar 'list single-balls)))
+          (valid-cmds1 (valid-commands stanje command1 player))
+          (valid-cmds2 (valid-commands stanje command2 player))
+          (valid-cmds3 (valid-commands stanje command3 player)))
+          (append valid-cmds3 valid-cmds2 valid-cmds1)))
 
-(defun update-state-gore-desno (stanje tacke oznaka) "CHECKED"
-	(cond
-		((caddr tacke) (move-state-three-up-right stanje (car tacke) (cadr tacke) (caddr tacke) oznaka))
-		((cadr tacke) (move-state-two-up-right stanje (car tacke) (cadr tacke) oznaka))
-		(t (move-state-one-up-right stanje (car tacke) oznaka))))
+(defun results (stanje akcija)) ; TODO: svakom stanju za datu akciju pridruziti odredjenu heruistiku
+(defun terminal-test (stanje))	; TODO: prepraviti funkciju za zavrsetak igre
+(defun utility (stanje player)) ; TODO: ako je beli pobedio vratiti +1, a ako je crni -1
 
-(defun update-state-gore-levo (stanje tacke oznaka) "CHECKED"
-	(cond
-		((caddr tacke) (move-state-three-up-left stanje (car tacke) (cadr tacke) (caddr tacke) oznaka))
-		((cadr tacke) (move-state-two-up-left stanje (car tacke) (cadr tacke) oznaka))
-		(t (move-state-one-up-left stanje (car tacke) oznaka))))
 
-(defun update-state-levo (stanje tacke oznaka) "CHECKED"
-	(cond
-		((caddr tacke) (move-state-three-left stanje (car tacke) (cadr tacke) (caddr tacke) oznaka))
-		((cadr tacke) (move-state-two-left stanje (car tacke) (cadr tacke) oznaka))
-		(t (move-state-one-left stanje (car tacke) oznaka))))
-
-(defun update-state-dole-levo (stanje tacke oznaka) "CHECKED"
-	(cond
-		((caddr tacke) (move-state-three-down-left stanje (car tacke) (cadr tacke) (caddr tacke) oznaka))
-		((cadr tacke) (move-state-two-down-left stanje (car tacke) (cadr tacke) oznaka))
-		(t (move-state-one-down-left stanje (car tacke) oznaka))))
-
-(defun update-state-dole-desno (stanje tacke oznaka) "CHECKED"
-	(cond
-		((caddr tacke) (move-state-three-down-right stanje (car tacke) (cadr tacke) (caddr tacke) oznaka))
-		((cadr tacke) (move-state-two-down-right stanje (car tacke) (cadr tacke) oznaka))
-		(t (move-state-one-down-right stanje (car tacke) oznaka))))
-
-;TESTING
-(setf poc (init-state))
+(setq poc (init-state))
 (print-list poc)
-(format t "~%~%~%")
-;(igraj poc t nil) ; najpre igram prvi kaol beli igrac, a nakon toga igram kao crni kompijuter
-;(trace postavi)
-	;(trace update-state-desno)
-	;(trace move-state-two-right)
-	;(trace move-state-one-right)
-	;(stampaj (unesi poc t))
-	;(trace update-state-dole-desno)
-		(trace move-state-two-down-left)
-				(print-list (unesi poc t))
-		(untrace move-state-two-down-left)
-	;(untrace update-state-dole-desno)
-		;(untrace move-state-one-right)
-	;(untrace move-state-two-right)
-	;(untrace update-state-desno)
-;(trace postavi)
+;(format t "~%~%~%")
+
+;(print-list (unesi poc t))
+
+(print-list (actions poc t))

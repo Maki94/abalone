@@ -1,8 +1,8 @@
 (require "algorithms.lisp")
 (require "constants.lisp")
 (require "init.lisp")
-(require "newNavigation.lisp")
-
+(require "navigation.lisp")
+(require "validate.lisp")
 
 (defun abalone ()
 	(let* ((stanje (init-state))
@@ -42,15 +42,28 @@
         ((cadr tacke) (move-state-two stanje (car tacke) (cadr tacke) oznaka smer))
         (t (move-state-one stanje (car tacke) oznaka smer))))
 
-(defun actions (stanje player) ; TODO: returns all valid moves
-)
-(defun results (stanje akcija))
-(defun terminal-test (stanje))
-(defun utility (stanje player))
+(defun actions (stanje player)
+  (let* ( (single-balls (single-balls (player-state stanje player)))
+          (balls (player-state stanje player))
+          (neighbours2 (make-set-from-list (sort-lista-tacke (all-neighbours2 single-balls balls))))
+          (neighbours3 (make-set-from-list (sort-lista-tacke (all-neighbours3 neighbours2 balls))))
+          (command3 (make-command neighbours3))
+          (command2 (make-command neighbours2))
+          (command1 (make-command (mapcar 'list single-balls)))
+          (valid-cmds1 (valid-commands stanje command1 player))
+          (valid-cmds2 (valid-commands stanje command2 player))
+          (valid-cmds3 (valid-commands stanje command3 player)))
+          (append valid-cmds3 valid-cmds2 valid-cmds1)))
+
+(defun results (stanje akcija)) ; TODO: svakom stanju za datu akciju pridruziti odredjenu heruistiku
+(defun terminal-test (stanje))	; TODO: prepraviti funkciju za zavrsetak igre
+(defun utility (stanje player)) ; TODO: ako je beli pobedio vratiti +1, a ako je crni -1
 
 
-
-(setf poc (init-state))
+(setq poc (init-state))
 (print-list poc)
-(format t "~%~%~%")
-(print-list (unesi poc t))
+;(format t "~%~%~%")
+
+;(print-list (unesi poc t))
+
+(print-list (actions poc t))
