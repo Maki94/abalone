@@ -5,14 +5,14 @@ _Note: wlada@elfak.ni.ac.rs _
 ROKOVI ZA FAZE PROJEKTA IZ VEŠTAČKE INTELIGENCIJE:
 
 1. Formulacija problema i implementacija interfejsa
-ROK: 2.4.2015. GODINE
+ROK: __2.4.2015.__ GODINE
 2. Implementacija operatora promene stanja
-ROK: 16.4.2015. GODINE
+ROK: __16.4.2015.__ GODINE
 3. Implementacija Min-Max algoritma za traženje sa alfa-beta odsecanjem
-ROK: 30.4.2015. GODINE
+ROK: __30.4.2015.__ GODINE
 4. Izrada heuristike (procena stanja)
 
-ROK: 28.5.2015. GODINE Rok za poslednju fazu projekta je ujedno i rok za
+ROK: __28.5.2015.__ GODINE Rok za poslednju fazu projekta je ujedno i rok za
 predaju konačne verzije projekta.
 ***
 ## Project workflow
