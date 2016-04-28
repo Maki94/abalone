@@ -132,7 +132,7 @@
           (p3 (caddar command))
           (direction (cadr command)))
           (cond
-                (p3 (valid-state-three stanje p1 p2 p3 direction player)) ; TODO: valid-state-three
+                (p3 (valid-state-three stanje p1 p2 p3 direction player))
                 (p2 (valid-state-two stanje p1 p2 direction player))
                 (p1 (valid-state-one (state-empty stanje) p1 direction)))))
 

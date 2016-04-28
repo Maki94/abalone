@@ -52,7 +52,7 @@
 																				(list (car x) (append (cdr tacka) (cadr x))) x))
 																				 state-paremeter)))
 
-(defun stampaj (stanje) "CHECKED" ; TODO Ponovo implementirati kada se sredi GUI
+(defun stampaj (stanje) "CHECKED"
 	(format t "~%White:~%")
 	(print-list (state-white stanje))
 	(format t "~%Black:~%")
