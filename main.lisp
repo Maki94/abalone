@@ -69,8 +69,6 @@
 
 "( (1 (((H 6) (H 5) (H 4)) 4)) (1 (((I 6) (H 5) (G 4)) 2)) (1 (((I 6) (H 5) (G 4)) 5)) )"
 
-;(defun terminal-test (stanje))	; TODO: prepraviti funkciju za zavrsetak igre
-;(defun utility (stanje player)) ; TODO: ako je beli pobedio vratiti +1, a ako je crni -1
 
 
 (setq poc (init-state))
