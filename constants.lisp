@@ -1,6 +1,3 @@
-(require "algorithms.lisp")
-(require "init.lisp")
-
 (defconstant desno 1)
 (defconstant gore-desno 2)
 (defconstant gore-levo 3)

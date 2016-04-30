@@ -45,43 +45,43 @@
     ((and (not (equal (car mx) (car mn))) (not (= (cadr mx) (cadr mn))) (= smer gore-desno)) (list (next-char (car mx)) (1+ (cadr mx))))
     ((and (not (equal (car mx) (car mn))) (not (= (cadr mx) (cadr mn))) (= smer dole-levo))(list (prev-char (car mn)) (1- (cadr mn))))))))
 
-(defun move-two-without-pushing (stanje mx mn smer)
+(defun move-two-without-pushing (empty mx mn smer)
   (cond
     ((and (equal (car mx) (car mn)) (= smer desno))
-      (valid-state-one (state-empty stanje) mx smer))
+      (valid-state-one empty mx smer))
     ((and (equal (car mx) (car mn)) (= smer levo))
-      (valid-state-one (state-empty stanje) mn smer))
+      (valid-state-one empty mn smer))
 
     ((and (not (equal (car mx) (car mn))) (not (= (cadr mx) (cadr mn))) (= smer gore-desno))
-      (valid-state-one (state-empty stanje) mx smer))
+      (valid-state-one empty mx smer))
     ((and (not (equal (car mx) (car mn))) (not (= (cadr mx) (cadr mn))) (= smer dole-levo))
-      (valid-state-one (state-empty stanje) mn smer))
+      (valid-state-one empty mn smer))
 
     ((and (= (cadr mx) (cadr mn)) (= smer gore-levo))
-      (valid-state-one (state-empty stanje) mx smer))
+      (valid-state-one empty mx smer))
     ((and (= (cadr mx) (cadr mn)) (= smer dole-desno))
-      (valid-state-one (state-empty stanje) mn smer))
+      (valid-state-one empty mn smer))
 
-    (t (and (valid-state-one (state-empty stanje) mn smer) (valid-state-one (state-empty stanje) mx smer)))))
+    (t (and (valid-state-one empty mn smer) (valid-state-one empty mx smer)))))
 
-(defun move-three-without-pushing (stanje mx mid mn smer)
+(defun move-three-without-pushing (empty mx mid mn smer)
   (cond
     ((and (equal (car mx) (car mn)) (= smer desno))
-      (valid-state-one (state-empty stanje) mx smer))
+      (valid-state-one empty mx smer))
     ((and (equal (car mx) (car mn)) (= smer levo))
-      (valid-state-one (state-empty stanje) mn smer))
+      (valid-state-one empty mn smer))
 
     ((and (not (equal (car mx) (car mn))) (not (= (cadr mx) (cadr mn))) (= smer gore-desno))
-      (valid-state-one (state-empty stanje) mx smer))
+      (valid-state-one empty mx smer))
     ((and (not (equal (car mx) (car mn))) (not (= (cadr mx) (cadr mn))) (= smer dole-levo))
-      (valid-state-one (state-empty stanje) mn smer))
+      (valid-state-one empty mn smer))
 
     ((and (= (cadr mx) (cadr mn)) (= smer gore-levo))
-      (valid-state-one (state-empty stanje) mx smer))
+      (valid-state-one empty mx smer))
     ((and (= (cadr mx) (cadr mn)) (= smer dole-desno))
-      (valid-state-one (state-empty stanje) mn smer))
+      (valid-state-one empty mn smer))
 
-    (t (and (valid-state-one (state-empty stanje) mn smer) (valid-state-one (state-empty stanje) mid smer) (valid-state-one (state-empty stanje) mx smer)))))
+    (t (and (valid-state-one empty mn smer) (valid-state-one empty mid smer) (valid-state-one empty mx smer)))))
 
 (defun valid-state-one (empty tacka smer)
   (let* ((new-tacka (get-new-tacka smer tacka)))
@@ -92,10 +92,10 @@
 (defun valid-state-two (stanje mxt mnt smer player) ; tacka1 min, tacka2 max
   (let*(  (opp-balls (player-state stanje (not player)))
           (balls (player-state stanje player))
-          (empty (state-empty stanje))
+          (empty (get-empty stanje))
           (new-tacka (car (new-third-tacka smer mxt mnt)))) ; imace vrednost samo ako je slucaj da moze da gurne
           (cond
-            ((null new-tacka) (move-two-without-pushing stanje mxt mnt smer)); tada ne moze da odgurne
+            ((null new-tacka) (move-two-without-pushing empty mxt mnt smer)); tada ne moze da odgurne
             ((find-ball new-tacka balls) nil) ; ako je sledeca tacka iste boje, onda  ne moze da izvrsi taj potez
             ((find-ball new-tacka empty) t) ; ako je sledeca tacka empty, onda moze da izvrsi taj potez
             (t (let* ((next-tacka (car (new-third-tacka smer (max-tacka new-tacka mxt) (min-tacka new-tacka mnt)))))
@@ -108,10 +108,10 @@
 (defun valid-state-three (stanje t1 t2 t3 smer player)
   (let*(  (opp-balls (player-state stanje (not player)))
           (balls (player-state stanje player))
-          (empty (state-empty stanje))
+          (empty (get-empty stanje))
           (new-tacka (car (new-third-tacka smer t1 t3)))) ; imace vrednost u slucaju da moze da gurne
           (cond
-              ((null new-tacka) (move-three-without-pushing stanje t1 t2 t3 smer)) ; tada ne moze da odgurne i poziva se odgovarajuca funkcija
+              ((null new-tacka) (move-three-without-pushing empty t1 t2 t3 smer)) ; tada ne moze da odgurne i poziva se odgovarajuca funkcija
               ((find-ball new-tacka balls) nil) ; ako moze da gura i sledeca tacka je iste boje, onda potez nije validan
               ((find-ball new-tacka empty) t) ; ako moze da gura i sledeca tacka je prazna, ona se moze pomeriti u tom pravcu
               (t (let* ((next-tacka (car (new-third-tacka smer (max-tacka new-tacka t1) (min-tacka new-tacka t3))))) ; slucaj kada je sledeca tacka suprotne boje
@@ -134,7 +134,7 @@
           (cond
                 (p3 (valid-state-three stanje p1 p2 p3 direction player))
                 (p2 (valid-state-two stanje p1 p2 direction player))
-                (p1 (valid-state-one (state-empty stanje) p1 direction)))))
+                (p1 (valid-state-one (get-empty stanje) p1 direction)))))
 
 (defun valid-commands (stanje command player)
   (if command

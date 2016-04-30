@@ -14,8 +14,8 @@
 (defun print-row (white-row black-row start end) ; -row = (5 6)
   (cond
     ((= start end) nil)
-    ((find start white-row) (progn (format t "w ") (print-row (cdr white-row) black-row (1+ start) end)))
-    ((find start black-row) (progn (format t "b ") (print-row white-row (cdr black-row) (1+ start) end)))
+    ((find start white-row) (progn (format t "w ") (print-row (delete start white-row) black-row (1+ start) end)))
+    ((find start black-row) (progn (format t "b ") (print-row white-row (delete start black-row) (1+ start) end)))
     (t (progn (format t "- ") (print-row white-row black-row (1+ start) end)))))
 
 (defun print-table-handler (white black gap down) ; init gap = 4; down = t

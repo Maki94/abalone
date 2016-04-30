@@ -21,26 +21,28 @@
 (defun my-or (x y) (or x y))
 (defun equal3 (p1 p2 p3)
 	(and (equal p1 p2) (equal p2 p3)))
-(defun occupied (black white) 	; "pravi listu zauzetih elemenata"
+(defun occupied (stanje) (occupied-handler (state-black stanje) (state-white stanje)))
+(defun occupied-handler (black white) 	; "pravi listu zauzetih elemenata"
 	(if (and white black)
 		(cons (list (caar white) (set-union2 (cadar black) (cadar white)))
-						(occupied (cdr black) (cdr white)))))
+						(occupied-handler (cdr black) (cdr white)))))
 
+(defun get-empty (stanje)
+	(get-empty-handler (occupied-handler (state-black stanje) (state-white stanje)) '(5 6 7 8 9)))
 
-(defun get-empty (occupied row)
+(defun get-empty-handler (occupied row)
 	(cond
 		((null occupied) nil)
 		(t (cons  (list (caar occupied) (set-difference2 row (cadar occupied)))
-								(get-empty (cdr occupied) (append
+								(get-empty-handler (cdr occupied) (append
 																								(if (= (1- (car row)) 0) nil (list (1- (car row))))
 																								(if (= (1- (car row)) 0) (without-last row) row)))))))
 
 
-(defun get-state (white black empty)
+(defun get-state (white black)
 	(make-state
 		:white white
-		:black black
-		:empty empty))
+		:black black))
 
 (defun remove-point (state-paremeter tacka) "CHECKED"
 		(apply 'list (mapcar (lambda (x)	(if (equal (car x) (car tacka))
@@ -48,17 +50,16 @@
 																				 state-paremeter)))
 
 (defun add-point (state-paremeter tacka)		"CHECKED"
+		(if (out-of-table tacka) state-paremeter
 		(apply 'list (mapcar (lambda (x)	(if (equal (car x) (car tacka))
 																				(list (car x) (append (cdr tacka) (cadr x))) x))
-																				 state-paremeter)))
+																				 state-paremeter))))
 
 (defun stampaj (stanje) "CHECKED"
 	(format t "~%White:~%")
 	(print-list (state-white stanje))
 	(format t "~%Black:~%")
-	(print-list (state-black stanje))
-	(format t "~%Empty:~%")
-	(print-list (state-empty stanje)))
+	(print-list (state-black stanje)))
 
 (defun kraj (stanje) "CHECKED"
 	(or (not (reduce #'my-or (mapcar (lambda (x) (cadr x)) (state-white stanje))))

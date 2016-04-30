@@ -11,20 +11,17 @@
 
 
 (defun init-black ()
-	'((I (8 9)) (H (7 8 9)) (G (7 8)) (F nil) (E nil) (D nil) (C (2 3)) (B (1 2 3)) (A (1 2))))
+	'((I (8 9)) (H (7 8 9)) (G (7 8)) (F (5)) (E nil) (D nil) (C (2 3)) (B (1 2 3)) (A (1 2))))
 
 
 (defun init-empty ()
 	(get-empty (occupied (init-black) (init-white)) '(5 6 7 8 9)))
 
-
 (defun init-state ()
 	(make-state
 		:white (init-white)
-		:black (init-black)
-		:empty (init-empty)))
+		:black (init-black)))
 
 (defstruct state
 	white
-	black
-	empty)
+	black)
