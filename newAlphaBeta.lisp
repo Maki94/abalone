@@ -7,7 +7,7 @@
     (f (if player 'max-value 'min-value)))
     (cond
       ((or (= 0 dubina) (null lp)) (list stanje (proceni-stanje stanje)))
-      (t (apply f (list (mapcar (lambda (x) (minimax x (1- dubina) (not player))) lp) dubina - 2000000 player))))) )
+      (t (apply f (list (mapcar (lambda (x) (minimax x (1- dubina) (not player))) lp) dubina - 2000000 player stanje))))) )
 (defun max-value (stanje-list)
   (alphabeta (stanje-list)
 )
@@ -19,10 +19,8 @@
     ((null lsv) stanje-vrednost)
     ((> (cadar lsv) (cadr stanje-vrednost)) (max-stanje-i (cdr lsv) (car lsv)))
     (t (max-stanje-i (cdr lsv) stanje-vrednost))))
-(defun alphabeta-handler (stanje-list depth alpha beta player)
-  (alphabeta ())
-)
-(defun alphabeta (stanje-list depth alpha beta player)
+
+(defun alphabeta (stanje-list depth alpha beta player stanje)
   (cond
     ((= depth 0) (list stanje (proceni-stanje stanje)))
     (player (progn
@@ -32,7 +30,7 @@
                 (setq alpha (max alpha (cadr pom)))
                 ;(setq alpha (max alpha (cadr (alphabeta x (1- depth) alpha beta (not player)))))
                 (if (<= beta alpha) (return-from alphabeta (list (car pom) alpha)))
-                )) stanje-list)
+                )) stanje)
               (list (car pom) alpha)))
     (t   (progn
             (mapcar (lambda (x) (progn
