@@ -18,44 +18,37 @@ function alphabeta(node, depth, α, β, Player)
 "
 (defun alphabeta (stanje depth alpha beta player)
   (cond
-    ((= depth 0) (proceni-stanje stanje))
-    (player
-      (progn
-        (mapcar (lambda (x)
-          (progn
-          (setq alpha (max alpha (alphabeta x (1- depth) alpha beta (not player))))
-          (if (<= beta alpha) (return-from alphabeta alpha))
-          )
-          ) (nova-stanja stanje player (actions stanje player)))
-        alpha))
-    ((not player)
-        (progn
-          (mapcar (lambda (x)
-            (progn
-            (setq beta (min beta (alphabeta x (1- depth) alpha beta (not player))))
-            (if (<= beta alpha) (return-from alphabeta beta))
-            )
-            ) (nova-stanja stanje player (actions stanje player)))
-            beta))
-    (t error "pozvan je T")))
-;
-;(defun alphabeta (stanje depth alpha beta player)
-;  (cond ((= depth 0) (proceni-stanje stanje))
-;        (player (progn (mapcar (lambda (child)  (progn
-;                      (setq a (max alpha (alphabeta child (1- depth) alpha beta (not player))))
-;                      ;(if (<= beta a) (return-from alphabeta a))
-;                      )
-;                  ) (nova-stanja stanje player (actions stanje player)))
-;                  (return-from alphabeta alpha)))
-;        (t (mapcar (progn (lambda (child) (progn
-;          (print-list alpha)
-;          (print-list alpha)
-;          (print-list alpha)
-;                      (setq b (min beta (alphabeta child (1- depth) alpha beta (not player))))
-;                      ;(if (<= b alpha) (return-from alphabeta b))
-;                      )
-;                  ) (nova-stanja stanje player (actions stanje player))
-;                  (return-from alphabeta beta))))))
-
+    ((= depth -1) (list stanje (proceni-stanje stanje)))
+    (player (progn
+              (mapcar (lambda (x) (progn
+                (setq pom (alphabeta x (1- depth) alpha beta (not player)))
+                (setq alpha (max alpha (cadr pom)))
+                ;(setq alpha (max alpha (cadr (alphabeta x (1- depth) alpha beta (not player)))))
+                (if (<= beta alpha) (return-from alphabeta (list (car pom) alpha)))
+                )) (nova-stanja stanje player (actions stanje player)))
+              (list (car pom) alpha)))
+    (t   (progn
+            (mapcar (lambda (x) (progn
+              (setq pomb (alphabeta x (1- depth) alpha beta (not player)))
+              (setq beta (min beta (cadr pomb)))
+              ;(setq beta (min beta (cadr (alphabeta x (1- depth) alpha beta (not player)))))
+              (if (<= beta alpha) (return-from alphabeta (list (car pomb) beta)))
+              )) (nova-stanja stanje player (actions stanje player)))
+              (list (car pomb) beta)))))
 ;(trace alphabeta)
-(print-list (alphabeta poc 2 -1 2000 t))
+;(print-list (alphabeta poc 2 -1 2000 t))
+(defun test-procena (sledbenici)
+  (if sledbenici
+    (progn
+      (format t "~%")
+      (print-list (proceni-stanje (car sledbenici)))
+      (format t "~%")
+      (stampaj (car sledbenici))
+      (format t "~%")
+      (test-procena (cdr sledbenici)))))
+;(test-procena (nova-stanja poc t (actions poc t)))
+(setq alphabeta-list (alphabeta poc 2 -1 200000000 t))
+(print-table  (car alphabeta-list)) (format t "~%") (print-list  (cadr alphabeta-list))
+;(setq alphabeta-list (alphabeta (car alphabeta-list) 1 -1 200000000 t))
+;(trace alphabeta)
+;(print-table  (car alphabeta-list)) (format t "~%") (print-list  (cadr alphabeta-list))
