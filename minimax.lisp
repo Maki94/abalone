@@ -68,7 +68,7 @@
       (format t "~%")
       (test-procena (cdr sledbenici)))))
 ;(test-procena (nova-stanja poc t (actions poc t)))
-(setq alphabeta-list (alphabeta poc 2 -1 200000000 t))
+(setq alphabeta-list (alphabeta poc 1 -1 200000000 t))
 (print-table  (car alphabeta-list)) (format t "~%") (print-list  (cadr alphabeta-list))
 ;(print-table (car (minimax poc 1 t)))
 

@@ -31,22 +31,6 @@
             ((find-ball new-tacka (occupied stanje)) stanje)
             (t (state-add-point (state-remove-point stanje player tacka) player new-tacka)))))
 
-;(defun move-state-one (stanje tacka player smer)
-;  (let*((new-tacka (get-new-tacka smer tacka))
-;        (opp-balls (player-state stanje (not player)))
-;        (balls (player-state stanje player))
-;  			(empty (get-empty stanje)))
-;
-;        (if player
-;          (get-state
-;             (add-point (remove-point balls tacka) new-tacka)
-;             opp-balls
-;             (add-point (remove-point empty new-tacka) tacka))
-;          (get-state
-;              balls
-;              (add-point (remove-point opp-balls tacka) new-tacka)
-;              (add-point (remove-point empty new-tacka) tacka)))))
-
 (defun move-state-two (stanje mx mn player smer)
   (let* ( (new-tacka (car (new-third-tacka smer mx mn)))
           (balls (player-state stanje player))
@@ -77,20 +61,3 @@
                           (and (= (cadr mx) (cadr mn)) (= smer gore-levo)))
                           (move-state-one (move-state-one (move-state-one new-stanje mx player smer) mid player smer) mn player smer)
                           (move-state-one (move-state-one (move-state-one new-stanje mn player smer) mid player smer) mx player smer))))
-
-;(defun move-state-three (stanje tacka1 tacka2 tacka3 player smer)
-;  (if (and (equal3 tacka1 tacka2 tacka3) (or (equal smer desno) (equal smer levo)))
-;    (move-state-one (move-state-one (move-state-one stanje tacka3 player smer) stanje tacka2 player smer) tacka1 player smer)
-;    (let*((new-tacka1 (get-new-tacka smer tacka3))
-;          (new-tacka2 (get-new-tacka smer new-tacka1))
-;          (white (state-white stanje))
-;          (black (state-black stanje))
-;          (removed-black (remove-point (remove-point black new-tacka1) new-tacka2))
-;          (removed-white (remove-point (remove-point white new-tacka1) new-tacka2)))
-;
-;          (move-state-one (move-state-one (move-state-one
-;            (if (and (equal removed-black black) (equal removed-white white))
-;                stanje
-;                (move-state-one (move-state-one stanje new-tacka2 (not player) smer)
-;                  new-tacka1 (not player) smer))
-;            tacka3 player smer) tacka2 player smer) tacka1 player smer))))
