@@ -25,17 +25,20 @@
         (add-point (state-black stanje) tacka))))
 
 (defun move-state-one (stanje tacka player smer)
-  (let*(  (new-tacka (get-new-tacka smer tacka)))
-          (cond
-            ((out-of-table new-tacka) (state-remove-point stanje player tacka))
-            ((find-ball new-tacka (occupied stanje)) stanje)
-            (t (state-add-point (state-remove-point stanje player tacka) player new-tacka)))))
+  (cond
+    ((out-of-table (get-new-tacka smer tacka)) (state-remove-point stanje player tacka))
+    ((find-ball (get-new-tacka smer tacka) (occupied stanje)) stanje)
+    (t (state-add-point (state-remove-point stanje player tacka) player (get-new-tacka smer tacka)))))
+            ;(let*(  (new-tacka (get-new-tacka smer tacka)))
+            ;)
 
 (defun move-state-two (stanje mx mn player smer)
   (let* ( (new-tacka (car (new-third-tacka smer mx mn)))
-          (balls (player-state stanje player))
-          (opp-balls (player-state stanje (not player)))
-          (new-stanje (if (find-ball new-tacka opp-balls) (move-state-one stanje new-tacka (not player) smer) stanje)))
+          ;(balls (player-state stanje player))
+          ;(opp-balls (player-state stanje (not player)))
+          (new-stanje (if (find-ball new-tacka (player-state stanje (not player)))
+                                (move-state-one stanje new-tacka (not player) smer)
+                                stanje)))
           (if (or (and (equal (car mx) (car mn)) (= smer desno))
                   (and (not (equal (car mx) (car mn))) (not (= (cadr mx) (cadr mn))) (= smer gore-desno))
                   (and (= (cadr mx) (cadr mn)) (= smer gore-levo)))
