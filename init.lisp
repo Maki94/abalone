@@ -11,7 +11,7 @@
 
 
 (defun init-black ()
-	'((I (8 9)) (H (7 8 9)) (G (7 8)) (F (5)) (E nil) (D nil) (C (2 3)) (B (1 2 3)) (A (1 2))))
+	'((I (8 9)) (H (7 8 9)) (G (7 8)) (F nil) (E nil) (D nil) (C (2 3)) (B (1 2 3)) (A (1 2))))
 
 
 (defun init-empty ()

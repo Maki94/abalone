@@ -50,10 +50,13 @@
 																				 state-paremeter)))
 
 (defun add-point (state-paremeter tacka)		"CHECKED"
-		(if (out-of-table tacka) state-paremeter
-		(apply 'list (mapcar (lambda (x)	(if (equal (car x) (car tacka))
-																				(list (car x) (append (cdr tacka) (cadr x))) x))
-																				 state-paremeter))))
+		(if (out-of-table tacka)
+				 state-paremeter
+				(apply 'list (mapcar (lambda (x)
+					(if (equal (car x) (car tacka))
+					 (list (car x) (sort  (append (cadr x) (cdr tacka)) #'<))
+						x))
+				 state-paremeter))))
 
 (defun stampaj (stanje) "CHECKED"
 	(format t "~%White:~%")
@@ -131,19 +134,44 @@
 (defun above (t1 t2)
   (if (less t1 t2) t2 t1))
 
-(defun sort-tacke (tacke) ; min mid max
-  (let* ( (p1 (car tacke))
-          (p2 (cadr tacke))
-          (p3 (caddr tacke)))
-          (if p3
-            (if (equal (max-tacka p1 p2) p1)
-                (if (equal (max-tacka p1 p3) p1)
-                  (list p1 (max-tacka p2 p3) (min-tacka p2 p3))
-                  (list p3 p1 p2))
-                (if (equal (max-tacka p2 p3) p2)
-                  (list p2 (max-tacka p1 p3) (min-tacka p1 p3))
-                  (list p3 p2 p1)))
-              (list (max-tacka p1 p2) (min-tacka p1 p2)))))
+;(defun sort-tacke (tacke) ; min mid max
+;  (if (caddr tacke)
+;    (if (equal (max-tacka (car tacke) (cadr tacke)) (car tacke))
+;        (if (equal (max-tacka (car tacke) (caddr tacke)) (car tacke))
+;          (list (car tacke) (max-tacka (cadr tacke) (caddr tacke)) (min-tacka (cadr tacke) (caddr tacke)))
+;          (list (caddr tacke) (car tacke) (cadr tacke)))
+;        (if (equal (max-tacka (cadr tacke) (caddr tacke)) (cadr tacke))
+;          (list (cadr tacke) (max-tacka (car tacke) (caddr tacke)) (min-tacka (car tacke) (caddr tacke)))
+;          (list (caddr tacke) (cadr tacke) (car tacke))))
+;      (list (max-tacka (car tacke) (cadr tacke)) (min-tacka (car tacke) (cadr tacke)))))
+
+;(defun sort-tacke (tacke) ; min mid max
+;  (let* ( (p1 (car tacke))
+;          (p2 (cadr tacke))
+;          (p3 (caddr tacke)))
+;          (if (p3)
+;            (if (equal (max-tacka p1 p2) p1)
+;                (if (equal (max-tacka p1 p3) p1)
+;                  (list p1 (max-tacka p2 p3) (min-tacka p2 p3))
+;                  (list p3 p1 p2))
+;                (if (equal (max-tacka p2 p3) p2)
+;                  (list p2 (max-tacka p1 p3) (min-tacka p1 p3))
+;                  (list p3 p2 p1)))
+;              (list (max-tacka p1 p2) (min-tacka p1 p2)))))
+
+(defun sort-tacke (tacke )
+	(cond
+		( (= (length tacke) 3)
+				(if (equal (max-tacka (car tacke) (cadr tacke)) (car tacke))
+						(if (equal (max-tacka (car tacke) (caddr tacke)) (car tacke))
+							(list (car tacke) (max-tacka (cadr tacke) (caddr tacke)) (min-tacka (cadr tacke) (caddr tacke)))
+							(list (caddr tacke) (car tacke) (cadr tacke)))
+						(if (equal (max-tacka (cadr tacke) (caddr tacke)) (cadr tacke))
+							(list (cadr tacke) (max-tacka (car tacke) (caddr tacke)) (min-tacka (car tacke) (caddr tacke)))
+							(list (caddr tacke) (cadr tacke) (car tacke)))))
+		( (= (length tacke) 2) (list (max-tacka (car tacke) (cadr tacke)) (min-tacka (car tacke) (cadr tacke))))
+		(t tacke)))
+
 
 (defun max-tacka (t1 t2) (if (less t1 t2) t2 t1))
 
@@ -163,13 +191,13 @@
 (defun sort-lista-tacke (lista)
   (if lista
     (cons (sort-tacke (car lista)) (sort-lista-tacke (cdr lista)))))
-		(defun make-single (node temp) ; node = D; temp = (1 2 3 4); return ((D 1) (D 2)..)
-		  (if temp
-		    (cons (list node (car temp)) (make-single node (cdr temp)))))
+(defun make-single (node temp) ; node = D; temp = (1 2 3 4); return ((D 1) (D 2)..)
+  (if temp
+    (cons (list node (car temp)) (make-single node (cdr temp)))))
 
-		(defun single-balls (list) ; returns ((I 5) (I 6) (H 4) (H 5) (H 6) (G 4) (G 5) (E 3) (E 4) (D 4) (C 5) (C 6) (B 4) (B 5) (B 6) (A 4) (A 5))
-		  (if list
-		     (append (make-single (caar list) (cadar list)) (single-balls (cdr list)))))
+(defun single-balls (list) ; returns ((I 5) (I 6) (H 4) (H 5) (H 6) (G 4) (G 5) (E 3) (E 4) (D 4) (C 5) (C 6) (B 4) (B 5) (B 6) (A 4) (A 5))
+  (if list
+     (append (make-single (caar list) (cadar list)) (single-balls (cdr list)))))
 
 (defun out-of-table (tacka)
 	(or(null tacka)
