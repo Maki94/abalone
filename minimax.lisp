@@ -3,20 +3,6 @@
   (if akcije
     (append (list (postavi stanje player (car (car akcije)) (cadr (car akcije)))) (nova-stanja stanje player (cdr akcije)))))
 
-;(defun proceni-stanje (state) (random 10000))
-;(defparameter *T1-RULES* '(
-;  (if (Jak ?x) then (Voli 'Milica ?x))
-;  (if (SkupaKola ?x) then (Voli 'Milica ?x))
-;  (if (Sportista ?x) then (Jak ?x))
-;  (if (Zdrav ?x) then (Sportista ?x))
-;  (if (Voli 'Milica ?x) then (Voli ?x 'Milica))))
-;
-;(defparameter *T1-FACTS* '(
-;  (Zdrav 'Milan) ))
-;
-;(prepare-knowledge *T1-RULES* *T1-FACTS* 10)
-;(infer '(Voli 'Milan 'Milica))
-
 
 (defun proceni-stanje (state)
   (random 10000))

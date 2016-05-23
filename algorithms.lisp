@@ -98,8 +98,7 @@
         (get-new-tacka gore-levo tacka)
         (get-new-tacka levo tacka)
         (get-new-tacka dole-levo tacka)
-        (get-new-tacka dole-desno tacka)))
-				 )
+        (get-new-tacka dole-desno tacka))))
 
 (defun find-ball (target list) ; target = ((d 1)) list = (()(D 1 2)())
 	(member (cadr target) (cadr (assoc (car target) list))))
@@ -220,3 +219,27 @@
         (cons balls (list levo))
         (cons balls (list dole-levo))
         (cons balls (list dole-desno))))
+
+(defun broj-loptica (balls)
+  (cond
+    ((null balls) 0)
+    ((null (cadar balls)) (broj-loptica (cdr balls)))
+    (t (+ (length (cadar balls)) (broj-loptica (cdr balls))))))
+
+(defun na-granici (ball)
+	(or	(equal (car ball) 'A)
+			(equal (car ball) 'I)
+			(equal (cadr ball) 9)
+			(equal (cadr ball) 1)
+			(equal ball '(H 4))
+			(equal ball '(G 3))
+			(equal ball '(F 4))
+			(equal ball '(B 6))
+			(equal ball '(C 7))
+			(equal ball '(D 8))))
+
+(defun broj-loptica-na-granici (single-balls)
+	(cond
+		((null single-balls) 0)
+		((na-granici (car single-balls)) (1+ (broj-loptica-na-granici (cdr single-balls))))
+		(t (broj-loptica-na-granici (cdr single-balls)))))

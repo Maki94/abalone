@@ -105,17 +105,54 @@
 (setq poc (init-state))
 (setq alpha-s (list poc -1))
 (setq beta-s (list  poc 200000))
-
 ;(trace abalone)
  ;(trace igraj)
- (trace unesi)
- (trace alphabeta)
-(abalone)
-(defun proba (st)
-	(progn
-		(print-table st)
-		(setq st (unesi st t))
-		(proba st) ) )
+ ;(trace unesi)
+ ;(trace alphabeta)
+;(abalone)
+
+
+;(defun proba (st)
+;	(progn
+;		(print-table st)
+;		(setq st (unesi st t))
+;		(proba st) ) )
 
 ;(trace move-state-two)
 ;(proba poc)
+
+
+;
+;(defun !IzasaoSaTerena (stare-loptice nove-loptice)
+;  (not (= (broj-loptica stare-loptice) (broj-loptica nove-loptice))))
+;
+;(defun !VeciBrojNaGranici (stare-loptice nove-loptice)
+;  (<= (broj-loptica-na-granici (single-balls stare-loptice)) (broj-loptica-na-granici (single-balls nove-loptice))))
+;
+;
+;(defparameter *T1-RULES* '(
+;  (if (!IzasaoSaTerena ?stareLoptice ?noveLoptice) then (NepogodnoStanje ?stareLoptice ?noveLoptice))
+;  (if (!VeciBrojNaGranici ?stareLoptice ?noveLoptice) then (NepogodnoStanje ?stareLoptice ?noveLoptice)) ))
+;(defparameter *T1-FACTS* '())
+;
+;(defparameter *T1-RULES* '(
+;  (if (NijeIzbacen ?balls ?x) then (NaTerenu ?x))))
+;
+;(defparameter *T1-FACTS* '(
+;	(NijeIzbacen `b1)
+;	(NijeIzbacen `b1)
+;	(NijeIzbacen `b1)
+;	(NijeIzbacen `b1)
+;	(NijeIzbacen `b1)
+;	(NijeIzbacen `b1)
+;	))
+;
+;(prepare-knowledge *T1-RULES* *T1-FACTS* 10)
+;
+;(setq n-stanje (car (alphabeta poc 2 (list poc -1) (list poc 2000000) t)))
+;
+;(trace count-results)
+;	(trace !IzasaoSaTerena)
+;		(trace !VeciBrojNaGranici)
+;;(print-list (count-results '(NepogodnoStanje staro-stanje novo-stanje)))
+;(print-list (count-results (list 'NepogodnoStanje (list (state-white poc)) (list (state-white n-stanje)))))
