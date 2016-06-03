@@ -15,40 +15,40 @@
 
 (defun min-s (s1 s2) (if (<= (cadr s1) (cadr s2)) s1 s2))
 
-(defun alphabetaNew (stanje dubina alpha-stanje beta-stanje player)
+(defun alphabetaNew (stanje dubina alpha-stanje beta-stanje player playerProceni)
   (cond
-    ((zerop dubina) (list stanje (proceni-stanje stanje player)))
+    ((zerop dubina) (list stanje (proceni-stanje stanje playerProceni)))
     (player
         (mapcar (lambda (x)
-            (setq alpha-stanje (max-s alpha-stanje (alphabeta-rest x  (1- dubina) alpha-stanje beta-stanje (if (= 1  dubina) player (not player)))))
+            (setq alpha-stanje (max-s alpha-stanje (alphabeta-rest x  (1- dubina) alpha-stanje beta-stanje player playerProceni)))
             (if (>= (cadr alpha-stanje) (cadr beta-stanje)) (return-from alphabetaNew beta-stanje)))
            (nova-stanja stanje player (actions stanje player)))
         alpha-stanje)
     (t
       (mapcar (lambda (x)
-            (setq beta-stanje (min-s beta-stanje (alphabeta-rest x (1- dubina) alpha-stanje beta-stanje (if (= 1  dubina) player (not player)))))
+            (setq beta-stanje (min-s beta-stanje (alphabeta-rest x (1- dubina) alpha-stanje beta-stanje (not player) playerProceni)))
             (if (<= (cadr beta-stanje) (cadr alpha-stanje)) (return-from alphabetaNew alpha-stanje)))
           (nova-stanja stanje player (actions stanje player)))
         beta-stanje)))
 
 
-(defun alphabeta-rest (stanje dubina alpha-stanje beta-stanje player)
+(defun alphabeta-rest (stanje dubina alpha-stanje beta-stanje player playerProceni)
   (cond
-    ((zerop dubina) (list stanje (proceni-stanje stanje player)))
+    ((zerop dubina) (list stanje (proceni-stanje stanje playerProceni)))
     (player
         (mapcar (lambda (x)
             (setq alpha-stanje (max-s alpha-stanje
-              (alphabeta-rest x (1- dubina) alpha-stanje beta-stanje (not player))
+              (alphabeta-rest x (1- dubina) alpha-stanje beta-stanje player playerProceni)
              ))
-            (if (>= (cadr alpha-stanje) (cadr beta-stanje)) (return-from alphabeta-rest (list stanje (proceni-stanje stanje (not player))))))
+            (if (>= (cadr alpha-stanje) (cadr beta-stanje)) (return-from alphabeta-rest (list stanje (proceni-stanje stanje playerProceni)))))
            (nova-stanja stanje (not player) (actions stanje player)))
         alpha-stanje)
     (t
       (mapcar (lambda (x)
             (setq beta-stanje (min-s beta-stanje
-              (alphabeta-rest x (1- dubina) alpha-stanje beta-stanje (not player))
+              (alphabeta-rest x (1- dubina) alpha-stanje beta-stanje (not player) playerProceni)
               ))
-            (if (<= (cadr beta-stanje) (cadr alpha-stanje)) (return-from alphabeta-rest (list stanje (proceni-stanje stanje (not player))))))
+            (if (<= (cadr beta-stanje) (cadr alpha-stanje)) (return-from alphabeta-rest (list stanje (proceni-stanje stanje playerProceni)))))
           (nova-stanja stanje (not player) (actions stanje player)))
         beta-stanje)))
 
