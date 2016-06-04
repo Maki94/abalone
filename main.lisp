@@ -24,7 +24,7 @@
 
 (defun igraj (stanje igrac auto)
 	(let* (	(nstanje (if auto
-											(car (alphabetaNew stanje 4 (list stanje -1) (list stanje 2000000) igrac igrac))
+											(car (alphabetaNew stanje 2 (list stanje -1) (list stanje 2000000) igrac igrac))
 											(unesi stanje igrac))))
 					(progn
 						(print-table nstanje)
@@ -33,7 +33,7 @@
 								;(print-table nstanje)
 							(let* (	(nnstanje (if auto
 																		(unesi nstanje (not igrac))
-																		(car (alphabetaNew nstanje 4 (list nstanje -1) (list nstanje 2000000) (not igrac) (not igrac))))))
+																		(car (alphabetaNew nstanje 2 (list nstanje -1) (list nstanje 2000000) (not igrac) (not igrac))))))
 										(progn
 											(print-table nnstanje)
 											(if (not (kraj nnstanje))
