@@ -14,12 +14,12 @@
 (defun proceni-stanje (balls)
   (+
     (hierarhija-broj-kuglica (single-balls balls))
-    (- 10000 (* 100 (length (single-balls balls))))
+    ;(- 10000 (* 100 (length (single-balls balls))))
+    (hierarhija-pozicija balls)
   ))
 
 (defun hierarhija-broj-kuglica (single)
-  (- 10000 (* 500 (length single))))
-
+  (- 50000 (* 500 (length single))))
 
 (defun hierarhija-pozicija (balls)
   (apply '+ (mapcar (lambda (x)

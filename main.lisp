@@ -53,16 +53,27 @@
         ((cadr tacke) (move-state-two stanje (car tacke) (cadr tacke) player smer))
         (t (move-state-one stanje (car tacke) player smer))))
 
+;(defun actions (stanje player)
+;  (let* ( (single-balls (single-balls (player-state stanje player)))
+;          (balls (player-state stanje player))
+;          (neighbours2 (make-set-from-list (sort-lista-tacke (all-neighbours2 single-balls balls))))
+;          (neighbours3 (make-set-from-list (sort-lista-tacke (all-neighbours3 neighbours2 balls)))))
+;          (append
+;						(valid-commands stanje (make-command neighbours3) player))
+;						(valid-commands stanje (make-command neighbours2) player)
+;						(valid-commands stanje (make-command (mapcar 'list single-balls)) player)))
 (defun actions (stanje player)
   (let* ( (single-balls (single-balls (player-state stanje player)))
           (balls (player-state stanje player))
           (neighbours2 (make-set-from-list (sort-lista-tacke (all-neighbours2 single-balls balls))))
-          (neighbours3 (make-set-from-list (sort-lista-tacke (all-neighbours3 neighbours2 balls)))))
-          (append
-						(valid-commands stanje (make-command neighbours3) player))
-						(valid-commands stanje (make-command neighbours2) player)
-						(valid-commands stanje (make-command (mapcar 'list single-balls)) player)))
-
+          (neighbours3 (make-set-from-list (sort-lista-tacke (all-neighbours3 neighbours2 balls))))
+          (command3 (make-command neighbours3))
+          (command2 (make-command neighbours2))
+          (command1 (make-command (mapcar 'list single-balls)))
+          (valid-cmds1 (valid-commands stanje command1 player))
+          (valid-cmds2 (valid-commands stanje command2 player))
+          (valid-cmds3 (valid-commands stanje command3 player)))
+          (append valid-cmds3 valid-cmds2 valid-cmds1)))
 
 
 (defun results (state actions)

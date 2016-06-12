@@ -10,11 +10,12 @@
 (defun proceni-stanje (balls)
   (+
     (hierarhija-broj-kuglica (single-balls balls))
-    (- 10000 (* 100 (length (single-balls balls))))
+    ;(- 10000 (* 100 (length (single-balls balls))))
+    (hierarhija-pozicija balls)
   ))
 
 (defun hierarhija-broj-kuglica (single)
-  (- 10000 (* 500 (length single))))
+  (- 50000 (* 500 (length single))))
 
 (defun hierarhija-pozicija (balls)
   (apply '+ (mapcar (lambda (x)
@@ -60,17 +61,32 @@
 (setq poc (init-state))
 (setq w '((I (5 6)) (H (4 5 6)) (G (4 5 6)) (F nil) (E nil) (D nil) (C (5 6)) (B (4 5 6)) (A (4 5))))
 
+(setq w-step '((I (5 6)) (H (4 5 6)) (G (5 6)) (F (4)) (E nil) (D nil) (C (5 6)) (B (4 5 6)) (A (4 5))))
+
 (setq w1 '((I (6)) (H (4 5 6)) (G (4 5 6)) (F nil) (E nil) (D nil) (C (5 6)) (B (4 5 6)) (A (4 5))))
+(format t "~%##########################################################~%")
 
-(print-list
-  (proceni-stanje w)
-  ;(hierarhija-broj-kuglica (single-balls w))
-)
+;(trace  hierarhija-pozicija)
+;(print-list
+;  (proceni-stanje w)
+;  ;(hierarhija-broj-kuglica (single-balls w))
+;)
+;(print-list
+;  (proceni-stanje w-step)
+;)
+;  (print-list
+;    (proceni-stanje w1)
+;    ;(hierarhija-broj-kuglica (single-balls w1))
+;    )
+;(format t "~%##########################################################~%")
+;(setq b1 '((I (8 9)) (H (7 8 9)) (G (7 8)) (F nil) (E nil) (D nil) (C (2 3)) (B (1 2 3)) (A (1 2))))
+;(setq b2 '((I (8)) (H (7 8 9)) (G (7 8)) (F (6)) (E nil) (D nil) (C (2 3)) (B (1 2 3)) (A (1 2))))
+;
+;(print-list
+;  (proceni-stanje b1)
+;)
+;(print-list
+;  (proceni-stanje b2)
+;)
 
-  (print-list
-    (proceni-stanje w1)
-    ;(hierarhija-broj-kuglica (single-balls w1))
-    )
-
-;(print-list (broj-na-ivici (init-white)))
-;(print-list (proceni-stanje poc t))
+(print-list (actions poc nil))
