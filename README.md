@@ -1,20 +1,5 @@
-# Abelone
+# Abalone
 
-_Note: wlada@elfak.ni.ac.rs _
-
-ROKOVI ZA FAZE PROJEKTA IZ VEŠTAČKE INTELIGENCIJE:
-
-1. Formulacija problema i implementacija interfejsa
-ROK: __2.4.2015.__ GODINE
-2. Implementacija operatora promene stanja
-ROK: __16.4.2015.__ GODINE
-3. Implementacija Min-Max algoritma za traženje sa alfa-beta odsecanjem
-ROK: __30.4.2015.__ GODINE
-4. Izrada heuristike (procena stanja)
-
-ROK: __28.5.2015.__ GODINE Rok za poslednju fazu projekta je ujedno i rok za
-predaju konačne verzije projekta.
-***
 ## Project workflow
 1.  Initial state
       - Which specifies how the game is set up at the start
