@@ -15,3 +15,10 @@ Two-player board game *Abalone*. The purpose of the project is to apply heuristi
       - A utility function defines numeric value (+1 white won, -1 black won)
 
 > The `initial state`, `Actions`, and `Result` functions define the game tree for the game.
+
+## Demo
+![Field][1]
+![Demo][2]
+
+[1]: https://github.com/Maki94/abalone/blob/master/demo/field.png "Field"
+[2]: https://github.com/Maki94/abalone/blob/master/demo/demo.png "Demo"
