@@ -1,20 +1,17 @@
 # Abalone
+Two-player board game *Abalone*. The purpose of the project is to apply heuristic based search algorithms for problem solving. 
 
-## Project workflow
-1.  Initial state
-      - Which specifies how the game is set up at the start
+## Workflow
+-  Initial state
 -   Player(s)  
-      - Defines which player has the move in a state
+      - Which player has the move
 -   Actions(s)
-      - Returns the set of legal moves in a state
+      - Returns the set of all legal moves in a state
 -   Result(s, a)
-      - The transition model, which defines the result of a move.
+      - Defines the result of a move.
 -   Terminal-Test(s)
-      - A terminal test, which is true when the game is over and false otherwise. States where the game has ended are called terminal state
+      - A terminal test, which is true when the game is over and false otherwise.
 -   Utility(s, p)
-      - A utility function defines the final numeric value for a game that ends in terminal state (+1 white won, -1 black won)
+      - A utility function defines numeric value (+1 white won, -1 black won)
 
-> Note: The `initial state`, `Actions`, and `Result` functions define the game tree for the game.
-
-## Decisions
-1.  Decisions
+> The `initial state`, `Actions`, and `Result` functions define the game tree for the game.
